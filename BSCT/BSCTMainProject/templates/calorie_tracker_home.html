@@ -1,0 +1,285 @@
+﻿<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <title>Bruno's Simple Calorie Tracker</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="static/css/bsct_style.css">
+
+        <script src="{{ url_for('static', filename='js/bsct_main_script.js') }}"></script>
+
+        <script src="{{ url_for('static', filename='js/classes/backend_func.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/classes/general_fe_func.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/classes/ui_dynamic_func.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/classes/ui_elements.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/classes/custom_events.js') }}"></script>
+
+        <script src="{{ url_for('static', filename='js/classes/client_side_stack.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/classes/user.js') }}"></script>
+        
+        <script src="{{ url_for('static', filename='js/classes/stateClasses/state_home.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/classes/stateClasses/state_search.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/classes/stateClasses/state_search_details.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/classes/stateClasses/state_meal_builder.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/classes/stateClasses/state_input_ammount.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/classes/stateClasses/state_name_save_meal.js') }}"></script>
+    </head>
+    <body>
+        <section name="search-section">
+            <fieldset class="top-bar">
+                <h1>Bruno's Simple Calorie Tracker</h1>
+                <form class="search" id="searchbar-form">
+                    <input id="searchbar" type="text" placeholder="Search for food..">
+                    <button id="search-btn" type="submit">
+                        <img src="{{ url_for('static', filename='images/search_btn.svg') }}">
+                    </button>
+                </form>
+            </fieldset>
+        </section>
+    
+        <section name="totals-section">
+            <fieldset class="macro-display">
+                <h1>Daily Total:</h1>
+                <div class="cards">
+                    <div class="macro-cards" id="calories" name="calories-card">
+                        <label class="macro-name">Total Calories: </label>
+                        <img src="{{ url_for('static', filename='images/vis_icon.svg') }}">
+                        <label id="calories-total-val" class="amt-g">0</label>
+                        <label name="total-calories-disp" class="amt-cal"><label id="calories-totals-val-cals">&nbsp;</label> calories</label>
+                    </div>
+    
+                    <div class="macro-cards" id="fat" name="fats-card">
+                        <label class="macro-name">Fats: </label>
+                        <img src="{{ url_for('static', filename='images/vis_icon.svg') }}">
+                        <label name="fats-amt" class="amt-g"><label id="fats-totals-val-g">0</label> g</label>
+                        <label name="total-fats-disp" class="amt-cal"><label id="fats-totals-val-cals"></label> kcal</label>
+                    </div>
+    
+                    <div class="macro-cards" id="carbs" name="carbs-card">
+                        <label class="macro-name">Carbs: </label>
+                        <img src="{{ url_for('static', filename='images/vis_icon.svg') }}">
+                        <label name="carbs-amt" class="amt-g"><label id="carbs-totals-val-g">0</label> g</label>
+                        <label name="total-carbs-disp" class="amt-cal"><label id="carbs-totals-val-cals">0</label> kcal</label>
+                    </div>
+    
+                    <div class="macro-cards" id="protein" name="protein-card">
+                        <label class="macro-name">Protein: </label>
+                        <img src="{{ url_for('static', filename='images/vis_icon.svg') }}">
+                        <label name="protein-amt" class="amt-g"><label id="protein-totals-val-g">0</label> g</label>
+                        <label name="total-protein-disp" class="amt-cal"><label id="protein-totals-val-cals">0</label> kcal</label>
+                    </div>
+                </div>
+            </fieldset>
+        </section>
+    
+        <section name="meal-tracker-section">
+            <div class="meal-tracker">
+                <h1 id="meal-tracker-title">Meal Tracker: </h1>
+                <div id="meal-tracker-container">
+                    <div id="meal-tracker-secondary-container">
+                        <div class="meal-builder" id="repeatable-meal-builder">
+                            <span class="meal-builder-top">
+                                <label id="meal-name" name="meal-name">Meal: </label>
+
+                                <label class="small-card-container" id="meal-total-calories" name="meal-calories">amt
+                                    kcal</label>
+                                    
+                                <button id="option-button" name="meal-builder-option" type="button">
+                                    <img src="{{ url_for('static', filename='images/option_btn.svg') }}">
+                                </button>
+                            </span>
+        
+                            <button id="add-to-meal" name="add-to-meal-btn" type="button">
+                                <img src="{{ url_for('static', filename='images/add_to_meal_button.svg') }}">
+                            </button>
+        
+                            <ul id="food-list" name="food-list">
+                                <!--just one li - placeholder -->
+                                <li id="food-list-item">
+                                    <label class="listed-food">food eaten</label>
+                                    <label class="listed-amt">grams consumed</label>
+                                </li>
+                            </ul>
+        
+                            <span id="current-meal-macros" name="current-meal-macros">
+                                <label class="small-card-container" name="fat-in-meal"> g Fat </label>
+                                <label class="small-card-container" name="carbs-in-meal"> g Carbs </label>
+                                <label class="small-card-container" name="protein-in-meal"> g Protein </label>
+                            </span>
+                        </div>
+                    </div>
+    
+                    <div class="add-new-meal">
+                        <button id="add-new-meal-btn">
+                            <img src="{{ url_for('static', filename='images/add_new_meal.svg') }}">
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    
+        <!-- overlay naming needs to be improved -->
+        <section name="overlays-section">
+            <div id="overlay">
+                <div class="modal-results-card">
+                    <div class="modal-results-card-li-items-display">
+                        <h1>Search Results:</h1>
+    
+                        <select class="result-type-selector" name="result-type-selector">
+                            <option hidden selected>Select a search type: </option>
+                            <option value="SR Legacy">Derived/Containing Foods</option>
+                            <option value="Branded">Branded Food - Labels</option>
+                            <option value="Foundation">Simple Food - Foundation</option>
+                        </select>
+    
+                        <div class="results-container">
+                            <ul id ="search-results-list">
+                                <li id="searched-items" value="fdcid">
+                                        <label id="item"></label>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="modal-results-card-specific-external-search">
+                        <h1 id="full-name-description"></h1>
+                        
+                        <label id="info-amt">Results per 100g: </label>
+                        
+                        <ul id ="info-list">
+                            <!-- li items created in js script -->
+                        </ul>
+
+                        <div id="mb-search-bottom-buttons">
+                            <button id="mb-cancel-btn-amt" type="button">
+                                <img src="{{ url_for('static', filename='images/cancel_btn.svg') }}">
+                            </button>
+                            <button id="mb-add-btn" type="button">
+                                <img src="{{ url_for('static', filename='images/add_to_meal_btn_blue.svg') }}">
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+            <div id="meal-builder-overlay">
+                <div class="builder-card">
+                    <div id="left-side-container">
+                        <h1 id="mb-header">Add food to meal: </h1>
+    
+                        <form id="mb-builder-searchbar-form">
+                            <input id="builder-searchbar" type="text" placeholder="Search for food..">
+                            <button id="mb-search-btn" type="submit">
+                                <img src="{{ url_for('static', filename='images/search_btn.svg') }}">
+                            </button>
+                            </input>
+                        </form>
+    
+                        <h3 id="mutable-display-header"></h3>
+    
+                        <span id="mb-bottom-container">
+                            <ul id="meal-list">
+                                <li> a food
+                                    <br>     
+                                    <label>a quantity (g or serving)</label>
+                                </li>
+                            </ul>
+    
+                            <fieldset class="bottom-buttons">
+                                <button id="cancel-btn" type="button">
+                                    <img src="{{ url_for('static', filename='images/cancel_btn.svg') }}">
+                                </button>
+                                <button id="name-save-btn" type="button">
+                                    <img src="{{ url_for('static', filename='images/name_save_meal_btn.svg') }}">
+                                </button>
+                            </fieldset>
+                        </span>
+                    </div>
+    
+                    <div class="mb-cards-container">
+                        <div class="mb-cards" id="mb-calories">
+                            <label class="mb-name-info">Calories: </label>
+                            <br>
+                            <label class="mb-card-update"><label id="mb-calories-val">0 kcal</label></label>
+                        </div>
+    
+                        <div class="mb-cards" id="mb-fat">
+                            <label class="mb-name-info">Fats: </label>
+                            <br>
+                            <label class="mb-card-update"><label id="mb-fats-val">0 g</label></label>
+                        </div>
+    
+                        <div class="mb-cards" id="mb-carbs">
+                            <label class="mb-name-info">Carbs: </label>
+                            <br>
+                            <label class="mb-card-update"><label id="mb-carbs-val">0 g</label></label>
+                        </div>
+    
+                        <div class="mb-cards" id="mb-protein">
+                            <label class="mb-name-info">Protein: </label>
+                            <br>
+                            <label class="mb-card-update"><label id="mb-protein-val">0 g</label></label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="mb-ammount-overlay">
+                    <div id="mb-ammount-container">
+                        <h1>Enter the ammount consumed:</h1>
+    
+                        <!-- No solution yet 
+                             needs better naming
+                             same attributes = same css 
+
+                        <form id="result-type-selector">
+                            <div>
+                                <input id="result-grams" name="result-type" type="radio" value="grams">
+                                <label for="result-grams">Grams</label>
+                            </div>
+                            <div>
+                                <input id="result-serving" name="result-type" type="radio" value="serving">
+                                <label for="result-serving">Serving</label>
+                            </div>
+                        </form>
+                        -->
+                        
+                        <label id="result-type-selector">in grams:</label>
+    
+                        <form id="mb-ammount-form">
+                            <input id="mb-ammount-input" type="number">
+                        </form>
+    
+                        <div class="mb-bottom-buttons">
+                            <button id="cancel-btn-amt">
+                                <img src="{{ url_for('static', filename='images/cancel_btn.svg') }}">
+                            </button>
+                            <button id="add-btn" type="submit">
+                                <img src="{{ url_for('static', filename='images/add_to_meal_btn_blue.svg') }}">
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="modal-name-save-overlay">
+                <div id="name-save-card">
+                    <h1>Name this meal:</h1>
+
+                    <form id="name-meal-form" type="submit">
+                        <input id="name-meal-input" type="text">
+                    </form>
+
+                    <div class="save-bottom-buttons">
+                        <button id="cancel-btn-save">
+                            <img src="{{ url_for('static', filename='images/cancel_btn.svg') }}">
+                        </button>
+                        <button id="save-btn" for="save-meal" type="submit">
+                            <img src="{{ url_for('static', filename='images/save_meal_btn.svg') }}">
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </body>    
+</html>
