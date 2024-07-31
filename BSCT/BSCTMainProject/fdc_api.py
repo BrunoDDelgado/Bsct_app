@@ -2,7 +2,7 @@ import requests
 import json
 
 # todo/info
-# fdc_api_key = "A7PghkrCVxx2NcPsq6PborAvm7LtA9JvAXMknbzI" 
+# fdc_api_key = "##" 
 #
 # *** set of useful links/endpoints
 # fdc_api = f"https://api.nal.usda.gov/fdc/v1/foods/list?api_key={fdc_api_key}"
@@ -41,7 +41,7 @@ def get_food_data(search_parameters):
     # stores the id, name, brand and descritpion information for searched foods
     search_parameters_json = json.dumps(search_parameters)
 
-    fdc_api_key = "A7PghkrCVxx2NcPsq6PborAvm7LtA9JvAXMknbzI"
+    fdc_api_key = "##"
     fdc_search = f"https://api.nal.usda.gov/fdc/v1/foods/search?api_key={fdc_api_key}"
     
     header = {'Content-Type': 'application/json'}
