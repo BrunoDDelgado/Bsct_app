@@ -1,7 +1,7 @@
 /* <<<GENERAL RULES>>> */
 html{
   font-family: 'Arial';
-  font-size: 1.45rem;
+  font-size: 16px;
 }
 
 body{
@@ -709,8 +709,8 @@ img:hover{
 }
 
 .bottom-buttons{
-  margin-top: 1rem;
-  align-self: center;
+  margin-top: 6rem;   
+  /*align-self: center;*/
 }
 
 #name-save-btn{
@@ -1038,20 +1038,19 @@ img:hover{
 }
 
 /* <<<SCROLLS-FOR-DIFFERENT-BROWSERS>>> */
-/*--------------------------------------------------------------*/
+/*--------------------------------------------------------------*
 
 /* 3 screen sizes -> need more -> improve them*/
 
 /* small/phone */
-@media(max-width: 950px){ 
-  html{
-    font-size: 1.35rem;
-  }
-  
+@media(max-width: 768px) and (orientation: portrait){
   body{
+    flex-direction: column;
+    flex-wrap:nowrap;
+    font-size:1rem;
     overflow: scroll; 
-    max-width: 100vw;
-    max-height: 100vh;
+    max-width: 90vw;
+    max-height: 80vh;
     margin-left:0rem;
     margin-right:0rem;
   }
@@ -1059,6 +1058,7 @@ img:hover{
   .top-bar{
     transform: scale(0.95);
     margin-top: 0.2rem;
+    max-height: 20vh;
   }
 
   
@@ -1111,9 +1111,16 @@ img:hover{
   }
 
   .meal-builder{
+    transform: scale(0.85);
+    height:45vh;
+    margin-bottom: 1rem;
+    width:80vw;
+    margin-inline:1rem;
+  }
+
+  #option-button{
+    margin-top:0rem;
     transform: scale(0.9);
-    max-height: 23vh;
-    margin-bottom: 3rem;
   }
 
   #add-to-meal{
@@ -1147,8 +1154,9 @@ img:hover{
 
   .builder-card{
     overflow: scroll;
-    border-radius: 0px;
-    left:0%;
+    border-radius: 8px;
+    left:3%;
+    width:85vw;
     flex-wrap: nowrap;
   }
 
@@ -1230,6 +1238,12 @@ img:hover{
     transform: scale(0.8);
   }
 
+  #cancel-btn-amt{
+    position: absolute;
+    left: 10%;
+    transform: scale(0.72);
+  }
+
   .bottom-buttons #cancel-btn{
     display: none;
     transform: scale(0.8);
@@ -1269,11 +1283,25 @@ img:hover{
   }
 
   .modal-results-card-li-items-display{
-    height: 85%;
-    min-height: 25rem;
-    min-width: 22rem;
-    width: 38%;
-    border-radius: 0px;
+    height: 80vh;
+    min-height: 0rem;
+    min-width: 0rem;
+    left:5%;
+    max-height:60vh;
+    height:60vh;
+    width: 90vw;
+    border-radius: 8px;
+  }
+
+  .modal-results-card-specific-external-search{
+    height: 80vh;
+    min-height: 0rem;
+    min-width: 0rem;
+    left:5%;
+    max-height:60vh;
+    height:60vh;
+    width: 85vw;
+    border-radius: 8px;
   }
 
   .modal-results-card h1{
@@ -1312,10 +1340,10 @@ img:hover{
   }
 
   #mb-ammount-container{
-    top:25%;
-    left:25%;
+    top:20%;
+    left:15%;
     height: 47%;
-    width: 30%;
+    width: 70vw;
     font-size: 0.8rem;
   }
 
@@ -1327,9 +1355,12 @@ img:hover{
     font-size: 0.7rem;
   }
 
-  #cancel-btn-amt{
-    left: 5%;
-    transform: scale(0.72);
+  #save-btn{
+    transform: scale(0.5);
+  }
+
+  #cancel-btn-save{
+    transform: scale(0.5);
   }
   
   #add-btn{
@@ -1338,122 +1369,272 @@ img:hover{
   }
 
   #name-save-card{
-    left:20%;
-    height: 38%;
-    min-width: 13rem;
+    left:10%;
+    top:15%;
+    width:80vw;
+    height: 60vh;
     font-size: 0.8rem;
   }
 }
 
-
-/* laptops -> lower res screen */
-@media (max-width: 1700px) { 
+/* lower res screen */
+@media (min-width:1100px) and (max-width: 1499px) { 
   html{
-    font-size: 1.23rem;
+    font-size: 1rem;
   }
 
-  .meal-builder{
-    width: 24vw;
-  }
-
-  #add-to-meal{
-    transform: scale(1);
-    left: 1%;
-    margin-bottom: 1rem;
-  }
-
-  .add-new-meal{
-    transform: scale(0.90);
-  }
-
-}
-
-/* 1080 */
-@media (max-width: 2000px) { 
-  html{
-    font-size: 1.3rem;
-  }
-
-  .meal-builder{
-    width: 24vw;
-  }
-
-  #add-to-meal{
-    transform: scale(1.05);
-    left: 1%;
-    margin-bottom: 1rem;
-  }
-
-  .add-new-meal{
+  .macro-cards{
     transform: scale(0.95);
   }
 
-}
-
-/* big screens  - 2k +*/
-@media (max-width:3000px) { 
-  html{
-    font-size: 1.8rem;
+  .cards{
+    font-size: 0.8rem;
+    margin-top:1.6rem;
+  }
+  
+  .macro-display h1{
+    margin-top: 1.5rem;
+    margin-left: 0.5rem;
   }
 
-  .meal-builder{
-    margin-right: 0rem;
-    width: 25vw;
+  .meal-tracker{
+    transform: scale(0.95);
+    margin-top: 0.15rem;
+    max-height: 42vh;
+  }
+
+  #meal-tracker-title{
+    margin-top: 1.4rem;
+    margin-left: 0.5rem;
+    margin-bottom:0.5rem;
+    font-size: 0.8rem;
+  }
+
+  #meal-tracker-secondary-container{
+    margin-bottom: 1rem;
   }
 
   #add-to-meal{
-    transform: scale(1.4);
-    left: 1%;
+    transform: scale(0.7);
+    left: -3%;
+    top:10%;
+    margin-bottom: 1rem;
+  }
+
+  #add-new-meal-btn{
+    transform: scale(0.7);
+  }
+
+  #option-button{
+    margin-top:0rem;
+    transform: scale(0.9);
+  }
+
+  .meal-builder{
+    margin-left: 0rem;
+    transform: scale(0.9);
+    width: 25vw;
+  }
+
+  .bottom-buttons{
+    transform: scale(0.8);
+  }
+
+  .bottom-buttons #cancel-btn{
+    transform: scale(0.8);
+  }
+
+  
+  #name-save-btn{
+    transform: scale(0.8);
+  }
+
+  #mb-cancel-btn-amt{
+    transform: scale(0.6);
+  }
+
+  #mb-add-btn{
+    transform: scale(0.6);
+    left: 35%;
+  }
+  
+  #cancel-btn-save{
+    transform: scale(0.5);
+    right: 10%;
+  }
+
+  #save-btn{
+    transform: scale(0.5);
+  }
+
+  #cancel-btn-amt{
+    transform: scale(0.6);
+    right:90%;
+  }
+
+  #add-btn{
+    transform: scale(0.6);
+    right:20%;
+  }
+}
+
+/* 1080 */
+@media (min-width:1500px) and (max-width: 2150px) { 
+  html{
+    font-size: 1.5rem;
+  }
+  .meal-builder{
+    width: 24vw;
+  }
+
+  #add-to-meal{
+    transform: scale(0.9);
+    left: 0%;
+    margin-bottom: 1rem;
   }
 
   .add-new-meal{
-    transform: scale(1.2);
+    transform: scale(0.85);
   }
 
+  #option-button{
+    margin-top:0rem;
+    transform: scale(1);
+  }
+
+  .bottom-buttons #cancel-btn{
+    transform: scale(0.85);
+  }
+
+  #name-save-btn{
+    transform: scale(0.85);
+  }
 }
 
-@media (max-width:3000px) { 
+/* 1440 */
+@media (min-width:2200px) and (max-width: 3700px) {
   html{
-    font-size: 1.8rem;
+    font-size:1.8rem;
   }
 
-  .meal-builder{
-    margin-right: 0rem;
-    width: 25vw;
+  #option-button{
+    margin-top:0.2rem;
+    transform: scale(2.1);
   }
 
   #add-to-meal{
-    transform: scale(1.4);
-    left: 1%;
-  }
-
-  .add-new-meal{
-    transform: scale(1.2);
-  }
-
-}
-
-@media (max-width:5000px) { 
-  html{
-    font-size: 2.1rem;
+    margin-left: 1.1rem;
+    margin-bottom: 1.2rem;
   }
 
   .meal-builder{
-    margin-right: 0rem;
-    width: 25vw;
+    width: 23vw;
+  }
+
+  .bottom-buttons #cancel-btn{
+    transform: scale(1.2);
+    margin-left:2rem;
+   }
+
+  #name-save-btn{
+    transform: scale(1.2);
+    margin-left:3rem;
+  }
+
+  #mb-cancel-btn-amt{
+    transform: scale(1);
+  }
+
+  #mb-add-btn{
+    transform: scale(1);
+    left: 65%;
+  }
+  
+  #cancel-btn-save{
+    transform: scale(0.8);
+    right: 10%;
+  }
+
+  #save-btn{
+    transform: scale(0.8);
+  }
+
+  #cancel-btn-amt{
+    transform: scale(0.8);
+    right:90%;
+  }
+
+  #add-btn{
+    transform: scale(1);
+    right:20%;
+  } 
+}
+
+/* big screens */
+@media (min-width:3500px) { 
+  html{
+    font-size: 2.5rem;
+  }
+
+ #option-button{
+    margin-top:0.2rem;
+    transform: scale(2.1);
   }
 
   #add-to-meal{
+    transform:scale(2);
+    margin-left: 2rem;
+    margin-bottom: 1.2rem;
+  }
+
+  #add-new-meal-btn{
+    transform: scale(2);
+  }
+
+  .meal-builder{
+    width: 23vw;
+  }
+
+  .bottom-buttons #cancel-btn{
     transform: scale(1.6);
-    left: 1%;
+    margin-left:2rem;
+   }
+
+  #name-save-btn{
+    transform: scale(1.6);
+    margin-left:3rem;
   }
 
-  .add-new-meal{
-    transform: scale(1.4);
+  #mb-cancel-btn-amt{
+    transform: scale(1.6);
+  }
+
+  #mb-add-btn{
+    transform: scale(1.6);
+    margin-left: 3rem;
+  }
+
+  #cancel-btn-save{
+    margin-top:0.5rem;
+    transform: scale(1.1);
+  }
+
+  #save-btn{
+    margin-top:0.5rem;
+    transform: scale(1.1);
+  }
+
+  #cancel-btn-amt{
+    transform: scale(1.6);
+    right:90%;
+  }
+
+  #add-btn{
+    transform: scale(1.6);
+    left:55%;
   }
 
 }
-
 
 /* ******************TODO******************
 - media queries will need more detail -> for now = workable

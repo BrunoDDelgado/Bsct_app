@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, session
+from flask_cors import CORS
 from pprint import pprint
 import uuid
 from waitress import serve
@@ -14,6 +15,8 @@ import meal_total
 # build class for route funcs
 
 app = Flask(__name__)
+CORS(app)
+
 app.secret_key = os.urandom(24)
 
 @app.route('/')
@@ -130,4 +133,3 @@ def temp_delete_edit():
     
 if __name__ == '__main__':
     serve(app, host='0.0.0.0', port=8000)
-    

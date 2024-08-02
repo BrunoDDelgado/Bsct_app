@@ -36,7 +36,11 @@ document.addEventListener("DOMContentLoaded", function(){
 
     ui.mbBuilderSearchBarForm.addEventListener("submit", async (e) =>{
         e.preventDefault();
-        ui.searchbarForm.dispatchEvent(new Event('submit'));
+        if (ui.searchbarForm.requestSubmit) {
+            ui.searchbarForm.requestSubmit();
+        } else {
+            ui.searchbarForm.submit();
+        }
     });
 
     ui.addToMealBuilder.addEventListener('click', (e) =>{
@@ -46,7 +50,11 @@ document.addEventListener("DOMContentLoaded", function(){
 
     ui.addFoodBtn.addEventListener('click', function(event){
         event.preventDefault();
-        ui.mbAmmountForm.dispatchEvent(new Event('submit'));
+        if (ui.mbAmmountForm.requestSubmit) {
+            ui.mbAmmountForm.requestSubmit();
+        } else {
+            ui.mbAmmountForm.submit();
+        }
     });
 
     ui.mbAmmountForm.addEventListener('submit', async function(event){
@@ -69,6 +77,11 @@ document.addEventListener("DOMContentLoaded", function(){
 
     ui.saveMeal.addEventListener('click', () =>{
         ui.nameMealForm.dispatchEvent(new Event('submit'));
+        if (ui.nameMealForm.requestSubmit) {
+            ui.nameMealForm.requestSubmit();
+        } else {
+            ui.nameMealForm.submit();
+        }
     });
 
     ui.addNewMealBtn.addEventListener("click",  function(event){
