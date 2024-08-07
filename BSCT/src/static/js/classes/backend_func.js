@@ -2,12 +2,14 @@
 // using XHMLHttp requests (old way) -> update to fetch - this/then
 // helped learning ajax/promisses/response/async/await + detail 
 
+const PREFIX = "/meals"
+
 class BackendHandler{
 
     postUserSearch(uSearch, dType = 1){            
         return new Promise((resolve, reject) => {           
 
-            let url = '/search';                                        
+            let url = PREFIX + '/search';                                        
             let searchRequest = new XMLHttpRequest();
 
             searchRequest.open("POST", url, true);
@@ -42,7 +44,7 @@ class BackendHandler{
     postUserFcid(fDCID) {
         return new Promise((resolve, reject) => {
 
-        let url = '/search_fdcid';
+        let url = PREFIX + '/search_fdcid';
         let fdcidPostRequest = new XMLHttpRequest();
 
         fdcidPostRequest.open("POST", url, true);
@@ -75,7 +77,7 @@ class BackendHandler{
     postMealToSave(mealListAndTotalObj){
         return new Promise((resolve, reject) =>{
 
-            let url = '/save_meal';
+            let url = PREFIX + '/save_meal';
             let saveMeal = new XMLHttpRequest();
 
             saveMeal.open('POST', url, true);
@@ -102,7 +104,7 @@ class BackendHandler{
     postFoodCalc(inputAmt){
         return new Promise((resolve, reject) => {
 
-            let url = '/meal_builder_consumed_amt';
+            let url = PREFIX + '/meal_builder_consumed_amt';
             let foodCalc = new XMLHttpRequest();
 
             foodCalc.open("POST", url, true);
@@ -134,7 +136,7 @@ class BackendHandler{
     getSavedMealsUpdate(){
         return new Promise((resolve, reject) =>{
 
-            let url = '/daily_meal_log';
+            let url = PREFIX + '/daily_meal_log';
             let savedMealsUpdate = new XMLHttpRequest();
 
             savedMealsUpdate.open("GET", url, true)
@@ -160,7 +162,7 @@ class BackendHandler{
     foodConsumedCurrMealUpdate(){
         return new Promise((resolve, reject) => {
 
-            let url = '/consumed_food_update';
+            let url = PREFIX + '/consumed_food_update';
             let updateConsumedFood = new XMLHttpRequest();
 
             updateConsumedFood.open('GET', url, true);
@@ -186,7 +188,7 @@ class BackendHandler{
         // until full editing is built
         return new Promise((resolve, reject) => {
 
-            let url = '/temp_meal_delete_edit';
+            let url = PREFIX + '/temp_meal_delete_edit';
             let deleteEdit = new XMLHttpRequest();
 
             deleteEdit.open("POST", url, true);
@@ -219,7 +221,7 @@ class BackendHandler{
     tempRefreshGet(){
         return new Promise((resolve, reject) =>{
 
-            let url = '/temp_refresh';
+            let url = PREFIX + '/temp_refresh';
             let refreshPageRequest = new XMLHttpRequest();
 
             refreshPageRequest.open("GET", url, true)
