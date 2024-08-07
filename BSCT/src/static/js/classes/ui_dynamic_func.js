@@ -95,7 +95,7 @@ class UiDynamicBehaviour{
         let updatedObj = foodMbObj.foodConsumedSoFar;
 
         let unitOfFood = " grams consumed"; 
-        // temp \\ later will add other options - serving - oz- etc
+        // temp \\ later will add other optUiDynamicBehaviourions - serving - oz- etc
         
         updatedObj.forEach(consumedFoodItemEntry => {
             let foodName = consumedFoodItemEntry.FoodName;
