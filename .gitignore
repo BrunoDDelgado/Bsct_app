@@ -1,0 +1,9 @@
+# IntelliJ / Pycharm
+**/.idea/*
+
+# VS Code
+**/.vscode/*
+
+# Python
+
+**.venv/*
