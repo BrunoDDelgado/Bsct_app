@@ -1,45 +1,37 @@
-from flask import Flask, render_template, request, session
-from flask_cors import CORS
-from pprint import pprint
-import uuid
-from waitress import serve
+from flask import (
+    Blueprint, 
+    request, 
+    session
+)
+from server.services.clients import fdc_api
+from server.services import meal_tracker
+from server.services import meal_total
+from server.services.meal_services import MealsServices
 import os
 import json
-import fdc_api
-import meal_tracker
-import meal_total
+import uuid
 
-#todo/info
-# later handle session in user class
-# when db is built will add user class
-# build class for route funcs
+meals_bp = Blueprint("meals", __name__)
 
-app = Flask(__name__)
-CORS(app)
+PREFIX = "/meals"
 
-app.secret_key = os.urandom(24)
+# FIXME: This should be done in a confiuration layer or Dependency Injection layer
+meals_services = MealsServices(fdc_api)
 
-@app.route('/')
-def index():
-    if 'curr_user' not in session:
-        session["curr_user"] = str(uuid.uuid4())
-    return render_template("calorie_tracker_home.html")
-
-@app.route('/search', methods=["POST", "GET"])
+@meals_bp.route(f'{PREFIX}/search', methods=["POST", "GET"])
 def get_user_search():
     print("handling post request")
     
     user_search_json = request.json
 
-    user_search =  str(user_search_json.get('uSearch'))
+    user_search =  user_search_json.get('uSearch')
     food_data_type = int(user_search_json.get('dType'))
 
-    search_params = fdc_api.set_search_parameters(user_search, 1, 50, food_data_type)
-    food_data = fdc_api.get_food_data(search_params)
-    
+    food_data = meals_services.get_food_data(user_search, food_data_type)    
+
     return json.dumps(food_data)
 
-@app.route('/search_fdcid', methods=["POST" , "GET"])
+@meals_bp.route(f'{PREFIX}/search_fdcid', methods=["POST" , "GET"])
 def fcdid_external():
     print("handling external fdcid post request") 
 
@@ -53,7 +45,7 @@ def fcdid_external():
 
     return json.dumps(fdcid_info_dict)
 
-@app.route('/meal_builder_consumed_amt', methods=["POST" , "GET"])
+@meals_bp.route(f'{PREFIX}/meal_builder_consumed_amt', methods=["POST" , "GET"])
 def add_to_meal():
     food_amt_req = request.json
     food_amt = int(food_amt_req.get('inputAmt'))
@@ -66,9 +58,9 @@ def add_to_meal():
         calculated_consumed_food = meal_tracker.current_meal_builder(session["curr_external_fdcid_search"], food_amt, session["user_list_of_foods_consumed"])
 
     session["calculated_food"] = calculated_consumed_food
-    return json.dumps(calculated_consumed_food)
+    return json.dumps(calculuid.uuidated_consumed_food)
 
-@app.route('/consumed_food_update', methods=["GET"])
+@meals_bp.route(f'{PREFIX}/consumed_food_update', methods=["GET"])
 def update_consumed_food():
     food_total = meal_total.calc_meal_total(session["user_list_of_foods_consumed"])
 
@@ -81,16 +73,12 @@ def update_consumed_food():
 
     return json.dumps(food_total_and_update_data)
 
-@app.route('/save_meal', methods=["POST" , "GET"])
+@meals_bp.route(f'{PREFIX}/save_meal', methods=["POST" , "GET"])
 def save_named_meal():
     unsaved_meal_with_foods_consumed_and_meal_total = request.json 
     
     if "update_meals" not in session:
-        update_meals = {}
-    else:
-        update_meals = session["update_meals"][0]
-     
-    meal_log = meal_total.save_to_all_meals_in_day_list(unsaved_meal_with_foods_consumed_and_meal_total, update_meals)
+        update_meals =uid.uuid_total.save_to_all_meals_in_day_list(unsaved_meal_with_foods_consumed_and_meal_total, update_meals)
     meal_log_calc = meal_total.save_each_meal_total(meal_log) 
     # to update the daily display cards
     
@@ -101,11 +89,11 @@ def save_named_meal():
     save_message = f"Saved meal:{meal_name}!"
     return json.dumps(save_message)
 
-@app.route('/daily_meal_log', methods = ["POST", "GET"])
+@meals_bp.route(f'{PREFIX}/daily_meal_log', methods = ["POST", "GET"])
 def get_user_daily_log():
     return json.dumps(session["update_meals"])
 
-@app.route('/temp_refresh', methods = ["GET"])
+@meals_bp.route(f'{PREFIX}/temp_refresh', methods = ["GET"])
 def temp_refresh(): 
     try:
         if session["update_meals"] != "":
@@ -115,7 +103,7 @@ def temp_refresh():
         null_obj = None
         return json.dumps(null_obj)
     
-@app.route('/temp_meal_delete_edit', methods = ["POST", "GET"])
+@meals_bp.route(f'{PREFIX}/temp_meal_delete_edit', methods = ["POST", "GET"])
 def temp_delete_edit():
     mealDeleteValue = request.json
     mealDeleteValue = str(mealDeleteValue.get('optionDeleteValue'))
@@ -130,6 +118,3 @@ def temp_delete_edit():
     session["update_meals"] = [updated_meal_log, updated_meal_calc]
 
     return json.dumps(returnMessage)
-    
-if __name__ == '__main__':
-    serve(app, host='0.0.0.0', port=8000)

@@ -46,38 +46,14 @@ def calc_meal_total(list_food_consumed):
     
     return total_dict
 
+# Refactoring example 
 def failsafe_calories(total_dict):
-    # database does not allways contain energy/calorie values
-    # calculated with different values - macros != calorie content
+    carbs = total_dict.get('Carbohydrate, by difference', 0.0) * 4
+    protein = total_dict.get('Protein', 0.0) * 4
+    fats = total_dict.get('Total lipid (fat)', 0.0) * 9
+    alcohol = total_dict.get('Alcohol, ethyl', 0.0) * 7
 
-    try:
-        carbs = float(total_dict['Carbohydrate, by difference'].split(' ')[0]) * 4  
-    except: 
-        print('carbs value not calculated')
-        carbs = float(0)
-
-    try:
-        protein = float(total_dict['Protein'].split(' ')[0]) * 4  
-    except: 
-        print('protein value not calculated')
-        protein = float(0)
-
-    try:
-        fats = float(total_dict['Total lipid (fat)'].split(' ')[0]) * 9  
-    except: 
-        print('fats value not calculated')
-        fats = float(0)
-
-    try:
-        alcohol = float(total_dict['Alcohol, ethyl'].split(' ')[0]) * 7  
-    except: 
-        print('alcohol value not calculated')
-        alcohol = float(0)
-
-    energy_calories_failsafe_calc = carbs + protein + fats + alcohol
-    energy_calories_failsafe_calc = round(energy_calories_failsafe_calc, 1)
-    
-    return energy_calories_failsafe_calc
+    return round(carbs + protein + fats + alcohol, 1)
 
 def save_to_all_meals_in_day_list(meal_to_save, all_saved_meals):
     meal_name = meal_to_save['meal_name']
